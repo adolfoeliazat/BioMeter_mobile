@@ -106,8 +106,6 @@ public class MainActivity extends Activity {
 	            
 	        	BluetoothDevice BTDevice =  myBluetoothAdapter.getRemoteDevice(lines[1]);
 	        	
-	        	//TODO Connecting as a client with a ConnectThread
-	        	
 	          }
 
 	        });
@@ -160,6 +158,7 @@ public class MainActivity extends Activity {
 	        if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 	             // Get the BluetoothDevice object from the Intent
 	        	 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+	        	 discoveredDevices.add(device);
 	        	 // add the name and the MAC address of the object to the arrayAdapter
 	             BTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 	             BTArrayAdapter.notifyDataSetChanged();
@@ -174,6 +173,7 @@ public class MainActivity extends Activity {
 	   }
 	   else {
 			BTArrayAdapter.clear();
+			discoveredDevices.clear();
 			myBluetoothAdapter.startDiscovery();
 			
 			registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));	
